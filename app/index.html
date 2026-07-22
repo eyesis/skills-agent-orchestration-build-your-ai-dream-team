@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Pulse</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Project Pulse</h1>
+    <p class="site-tagline">A quick pulse-check on what every project is doing right now.</p>
+  </header>
+
+  <main class="dashboard" id="dashboard" aria-live="polite">
+    <p class="loading-state">Loading projects&hellip;</p>
+  </main>
+
+  <script>
+    const dashboard = document.getElementById('dashboard');
+
+    function escapeHTML(str) {
+      const div = document.createElement('div');
+      div.textContent = str == null ? '' : String(str);
+      return div.innerHTML;
+    }
+
+    // Normalize free-text status/priority values into safe data-attribute
+    // tokens (lowercase, spaces -> hyphens) so CSS can style known values
+    // and gracefully fall back for anything unexpected.
+    function toToken(value) {
+      if (!value) return 'unknown';
+      return String(value).trim().toLowerCase().replace(/\s+/g, '-');
+    }
+
+    function renderEmptyState(message) {
+      dashboard.innerHTML = `
+        <div class="empty-state" role="status">
+          <h2>No projects to show</h2>
+          <p>${escapeHTML(message)}</p>
+        </div>
+      `;
+    }
+
+    function renderProjects(projects) {
+      if (!Array.isArray(projects) || projects.length === 0) {
+        renderEmptyState('There are no projects in the data source yet. Check back soon.');
+        return;
+      }
+
+      dashboard.innerHTML = '';
+
+      projects.forEach((project) => {
+        const name = project && project.name ? project.name : 'Untitled project';
+        const owner = project && project.owner ? project.owner : 'Unassigned';
+        const status = project && project.status ? project.status : 'Unknown';
+        const recentActivity = project && project.recentActivity ? project.recentActivity : 'No recent activity recorded.';
+        const priority = project && project.priority ? project.priority : 'Unspecified';
+        const summary = project && project.summary ? project.summary : '';
+
+        const statusToken = toToken(status);
+        const priorityToken = toToken(priority);
+
+        const card = document.createElement('article');
+        card.className = 'project-card';
+        card.setAttribute('data-status', statusToken);
+        card.setAttribute('data-priority', priorityToken);
+
+        card.innerHTML = `
+          <div class="project-card-header">
+            <h2 class="project-name">${escapeHTML(name)}</h2>
+            <span class="status-badge" data-status="${statusToken}">
+              <span class="status-dot" aria-hidden="true"></span>
+              ${escapeHTML(status)}
+            </span>
+          </div>
+
+          <p class="project-owner"><span class="field-label">Owner:</span> ${escapeHTML(owner)}</p>
+
+          ${summary ? `<p class="project-summary">${escapeHTML(summary)}</p>` : ''}
+
+          <p class="project-activity">
+            <span class="field-label">Recent activity:</span> ${escapeHTML(recentActivity)}
+          </p>
+
+          <div class="priority" data-priority="${priorityToken}">
+            <span class="field-label">Priority:</span>
+            <span class="priority-indicator" data-priority="${priorityToken}">${escapeHTML(priority)}</span>
+          </div>
+        `;
+
+        dashboard.appendChild(card);
+      });
+    }
+
+    fetch('./project-data.json')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        renderProjects(data && data.projects);
+      })
+      .catch((error) => {
+        console.error('Project Pulse: failed to load project-data.json', error);
+        renderEmptyState('We could not load project data right now. Please try again later.');
+      });
+  </script>
+</body>
+</html>

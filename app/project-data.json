@@ -1,0 +1,52 @@
+{
+  "projects": [
+    {
+      "name": "Atlas Data Migration",
+      "owner": "Priya Shah",
+      "status": "Active",
+      "recentActivity": "Completed migration of the billing schema to the new warehouse; QA pass scheduled this week.",
+      "priority": "High",
+      "summary": "Migrating legacy billing data to the new analytics warehouse ahead of the Q3 reporting cutover."
+    },
+    {
+      "name": "Nova Mobile Redesign",
+      "owner": "Diego Martinez",
+      "status": "On Hold",
+      "recentActivity": "Design review paused pending updated brand guidelines from marketing.",
+      "priority": "Medium",
+      "summary": "Refreshing the mobile app's navigation and visual design for the upcoming release."
+    },
+    {
+      "name": "Beacon Auth Service",
+      "owner": "Sam Okafor",
+      "status": "Blocked",
+      "recentActivity": "Waiting on security sign-off for the new token rotation policy before merging to main.",
+      "priority": "High",
+      "summary": "Rebuilding the authentication service with rotating tokens and improved audit logging."
+    },
+    {
+      "name": "Orbit Onboarding Flow",
+      "owner": "Lena Fischer",
+      "status": "Active",
+      "recentActivity": "Shipped the revised welcome tour to 25% of new users; monitoring activation metrics.",
+      "priority": "Medium",
+      "summary": "Streamlining first-run onboarding to reduce drop-off during account setup."
+    },
+    {
+      "name": "Cascade Reporting Suite",
+      "owner": "Marcus Webb",
+      "status": "Completed",
+      "recentActivity": "Final release deployed to production; documentation handed off to support.",
+      "priority": "Low",
+      "summary": "Delivered a self-serve reporting suite for internal stakeholders and support teams."
+    },
+    {
+      "name": "Ember Notifications Overhaul",
+      "owner": "Ana Torres",
+      "status": "Active",
+      "recentActivity": "Rolled out digest email preferences; gathering feedback from beta users.",
+      "priority": "Low",
+      "summary": "Modernizing notification preferences and delivery channels across web and mobile."
+    }
+  ]
+}

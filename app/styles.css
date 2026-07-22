@@ -1,0 +1,285 @@
+/* ===========================================================
+   Project Pulse Dashboard — styles.css
+   =========================================================== */
+
+:root {
+  --color-bg: #f4f6fb;
+  --color-surface: #ffffff;
+  --color-text: #1a1f36;
+  --color-muted: #5a6072;
+  --color-border: #e2e5ee;
+  --color-accent: #3b5bfd;
+
+  --color-status-active-bg: #e4f7ec;
+  --color-status-active-text: #0f7a3d;
+  --color-status-onhold-bg: #fff3e0;
+  --color-status-onhold-text: #8a5a00;
+  --color-status-blocked-bg: #fde8e8;
+  --color-status-blocked-text: #b3261e;
+  --color-status-completed-bg: #e8eaf6;
+  --color-status-completed-text: #3949ab;
+  --color-status-unknown-bg: #eceff1;
+  --color-status-unknown-text: #455a64;
+
+  --color-priority-high: #b3261e;
+  --color-priority-medium: #9a6700;
+  --color-priority-low: #0f7a3d;
+  --color-priority-unspecified: #5a6072;
+
+  --radius-lg: 14px;
+  --shadow-card: 0 2px 6px rgba(26, 31, 54, 0.06), 0 8px 24px rgba(26, 31, 54, 0.08);
+  --shadow-card-hover: 0 4px 10px rgba(26, 31, 54, 0.08), 0 14px 32px rgba(26, 31, 54, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* -----------------------------------------------------------
+   Header
+   ----------------------------------------------------------- */
+
+.site-header {
+  padding: 2rem 1.5rem 1.25rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.site-tagline {
+  margin: 0.35rem 0 0;
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+
+/* -----------------------------------------------------------
+   Dashboard layout
+   ----------------------------------------------------------- */
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem 1.5rem 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.loading-state,
+.empty-state {
+  grid-column: 1 / -1;
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--color-muted);
+}
+
+.empty-state h2 {
+  margin: 0 0 0.5rem;
+  color: var(--color-text);
+}
+
+/* -----------------------------------------------------------
+   Project card
+   ----------------------------------------------------------- */
+
+.project-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem 1.25rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  min-width: 0;
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.project-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.project-name {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.field-label {
+  font-weight: 600;
+  color: var(--color-muted);
+  margin-right: 0.25rem;
+}
+
+.project-owner,
+.project-activity {
+  margin: 0;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.project-summary {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+/* -----------------------------------------------------------
+   Status badge
+   ----------------------------------------------------------- */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  background: var(--color-status-unknown-bg);
+  color: var(--color-status-unknown-text);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: currentColor;
+  display: inline-block;
+}
+
+.status-badge[data-status="active"] {
+  background: var(--color-status-active-bg);
+  color: var(--color-status-active-text);
+}
+
+.status-badge[data-status="on-hold"] {
+  background: var(--color-status-onhold-bg);
+  color: var(--color-status-onhold-text);
+}
+
+.status-badge[data-status="blocked"] {
+  background: var(--color-status-blocked-bg);
+  color: var(--color-status-blocked-text);
+}
+
+.status-badge[data-status="completed"] {
+  background: var(--color-status-completed-bg);
+  color: var(--color-status-completed-text);
+}
+
+/* -----------------------------------------------------------
+   Priority indicator
+   ----------------------------------------------------------- */
+
+.priority {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.priority-indicator {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  color: var(--color-priority-unspecified);
+}
+
+.priority-indicator::before {
+  content: "\25CF"; /* filled circle, paired with text so color isn't the only signal */
+  margin-right: 0.35rem;
+}
+
+.priority-indicator[data-priority="high"] {
+  color: var(--color-priority-high);
+}
+
+.priority-indicator[data-priority="medium"] {
+  color: var(--color-priority-medium);
+}
+
+.priority-indicator[data-priority="low"] {
+  color: var(--color-priority-low);
+}
+
+/* Priority left-border accent on the card itself for quick scanning */
+.project-card[data-priority="high"] {
+  border-left: 4px solid var(--color-priority-high);
+}
+
+.project-card[data-priority="medium"] {
+  border-left: 4px solid var(--color-priority-medium);
+}
+
+.project-card[data-priority="low"] {
+  border-left: 4px solid var(--color-priority-low);
+}
+
+/* -----------------------------------------------------------
+   Responsive breakpoints
+   ----------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    padding: 0.5rem 1rem 2.5rem;
+  }
+
+  .site-header {
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .site-header h1 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+}
